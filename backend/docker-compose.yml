@@ -1,0 +1,43 @@
+## docker-compose.yml — HireFlow AI infrastructure
+##
+## Starts:
+##   redis    — Message broker + Celery result backend
+##
+## NOTE: Flask and the Celery worker run outside Docker (in your Python venv)
+## because they need access to your Windows Python environment.
+##
+## Usage:
+##   docker-compose up -d          # start Redis in background
+##   docker-compose down           # stop Redis
+##   docker-compose logs redis     # view Redis logs
+
+version: "3.9"
+
+services:
+
+  # ── Redis ─────────────────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: hireflow_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    # Persistence: save to disk every 60s if ≥ 1 key changed.
+    # This means jobs survive a Redis restart.
+    command: >
+      redis-server
+      --save 60 1
+      --loglevel notice
+      --maxmemory 256mb
+      --maxmemory-policy allkeys-lru
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+volumes:
+  redis_data:
+    driver: local

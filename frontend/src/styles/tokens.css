@@ -1,0 +1,135 @@
+/* ============================================================
+   HireFlow AI — Design Tokens (Complete System)
+   All colors, surfaces, and layout primitives.
+   Accent theming: override --accent-* per .theme-{color} class.
+   Dark mode: [data-theme="dark"] selector.
+   ============================================================ */
+
+:root {
+  /* --- Accent: Purple (default) --- */
+  --accent-50:  #EEEDFE;
+  --accent-100: #CECBF6;
+  --accent-200: #AFA9EC;
+  --accent-400: #7F77DD;
+  --accent-600: #534AB7;
+  --accent-800: #3C3489;
+  --accent-900: #26215C;
+
+  /* --- Surfaces (light) --- */
+  --bg:            #F6F6FB;
+  --surface:       #FFFFFF;
+  --surface-1:     #F2F2F8;
+  --surface-2:     #FFFFFF;
+  --border:        #E4E4EE;
+  --border-strong: #CCCCE0;
+
+  /* --- Text --- */
+  --text-primary:   #0E0E1A;
+  --text-secondary: #6B6B80;
+  --text-muted:     #9B9BB0;
+
+  /* --- Semantic --- */
+  --success-bg:     #D1FAE5;
+  --success-text:   #065F46;
+  --success-border: #A7F3D0;
+  --danger-bg:      #FEE2E2;
+  --danger-text:    #991B1B;
+  --danger-border:  #FECACA;
+  --warning-bg:     #FEF3C7;
+  --warning-text:   #92400E;
+  --warning-border: #FDE68A;
+  --info-bg:        #EFF6FF;
+  --info-text:      #1E40AF;
+  --info-border:    #BFDBFE;
+
+  /* --- Sidebar --- */
+  --sidebar-bg:        #16181F;
+  --sidebar-text:      #8B8FA8;
+  --sidebar-border:    rgba(255,255,255,0.06);
+  --sidebar-active:    rgba(255,255,255,0.08);
+
+  /* --- Gradients --- */
+  --gradient-primary: linear-gradient(135deg, var(--accent-400), var(--accent-600));
+  --gradient-header:  linear-gradient(135deg, var(--accent-400) 0%, var(--accent-600) 60%, var(--accent-800) 100%);
+
+  /* --- Layout --- */
+  --radius:    8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+  --shadow-lg: 0 10px 40px -8px rgba(0,0,0,0.15);
+  --shadow-glow: 0 0 0 3px var(--accent-50);
+
+  /* Glassmorphism */
+  --glass-bg:     rgba(238,237,254,0.4);
+  --glass-border: rgba(255,255,255,0.5);
+}
+
+/* ============================================================
+   DARK MODE
+   ============================================================ */
+[data-theme="dark"] {
+  --bg:            #0C0D14;
+  --surface:       #151620;
+  --surface-1:     #1D1E2C;
+  --surface-2:     #1D1E2C;
+  --border:        #272840;
+  --border-strong: #353658;
+
+  --text-primary:   #EEEEFF;
+  --text-secondary: #8888A8;
+  --text-muted:     #5555780;
+
+  --sidebar-bg:        #09090F;
+  --sidebar-text:      #7070A0;
+  --sidebar-border:    rgba(255,255,255,0.05);
+
+  --success-bg:     #052E1C;
+  --success-text:   #6EE7B7;
+  --success-border: #064E2C;
+  --danger-bg:      #2D0B0B;
+  --danger-text:    #FCA5A5;
+  --danger-border:  #450A0A;
+  --warning-bg:     #2D1F00;
+  --warning-text:   #FCD34D;
+  --warning-border: #451F00;
+  --info-bg:        #0C1A3A;
+  --info-text:      #93C5FD;
+  --info-border:    #1E3A70;
+
+  --glass-bg:     rgba(21,22,32,0.8);
+  --glass-border: rgba(255,255,255,0.08);
+  --shadow-glow: 0 0 0 3px rgba(127,119,221,0.2);
+}
+
+/* ============================================================
+   ACCENT COLOR THEMES
+   ============================================================ */
+.theme-purple {
+  --accent-50:  #EEEDFE; --accent-100: #CECBF6; --accent-200: #AFA9EC;
+  --accent-400: #7F77DD; --accent-600: #534AB7; --accent-800: #3C3489; --accent-900: #26215C;
+}
+.theme-blue {
+  --accent-50:  #E6F1FB; --accent-100: #B5D4F4; --accent-200: #85B7EB;
+  --accent-400: #378ADD; --accent-600: #185FA5; --accent-800: #0C447C; --accent-900: #042C53;
+}
+.theme-teal {
+  --accent-50:  #E1F5EE; --accent-100: #9FE1CB; --accent-200: #5ECBAA;
+  --accent-400: #1D9E75; --accent-600: #0F6E56; --accent-800: #085041; --accent-900: #04352B;
+}
+.theme-coral {
+  --accent-50:  #FAECE7; --accent-100: #F5C4B3; --accent-200: #EF9B7D;
+  --accent-400: #D85A30; --accent-600: #993C1D; --accent-800: #712B13; --accent-900: #4A1B0C;
+}
+.theme-pink {
+  --accent-50:  #FBEAF0; --accent-100: #F4C0D1; --accent-200: #ED93B1;
+  --accent-400: #D4537E; --accent-600: #993556; --accent-800: #72243E; --accent-900: #4B1528;
+}
+.theme-amber {
+  --accent-50:  #FAEEDA; --accent-100: #FAC775; --accent-200: #EF9F27;
+  --accent-400: #D4890A; --accent-600: #954F06; --accent-800: #633806; --accent-900: #412402;
+}
+/* Legacy aliases */
+.theme-green { --accent-50:#EAF3DE;--accent-100:#C0DD97;--accent-200:#97C459;--accent-400:#639922;--accent-600:#3B6D11;--accent-800:#27500A;--accent-900:#173404; }
+.theme-red   { --accent-50:#FCEBEB;--accent-100:#F7C1C1;--accent-200:#F09595;--accent-400:#E24B4A;--accent-600:#A32D2D;--accent-800:#791F1F;--accent-900:#501313; }

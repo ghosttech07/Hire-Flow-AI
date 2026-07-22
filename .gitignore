@@ -1,29 +1,33 @@
-# Node modules
-node_modules/
-npm-debug.log
-yarn-error.log
-
-# Environment variables
+# Environment & Secrets
 .env
-.env.local
-.env.*.local
+*.env
+*.env.local
+backend/.env
 
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
+# Python & Virtual Environments
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+logs/
+backend/logs/*
+!backend/logs/.gitkeep
 
-# OS
+# Node / Frontend
+node_modules/
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+.kombai/
+
+# IDE & OS Files
 .DS_Store
 Thumbs.db
+.vscode/
+.idea/
 
-# Build
-dist/
-build/
-.next/
-
-# Logs
-logs/
-*.log
+# System / Temporary
+*.tmp
