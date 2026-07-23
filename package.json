@@ -1,4 +1,9 @@
 {
+  "name": "hire-flow-ai",
+  "private": true,
+  "scripts": {
+    "build": "npm --prefix frontend install && npm --prefix frontend run build"
+  },
   "dependencies": {
     "canvas-confetti": "^1.9.4",
     "chart.js": "^4.5.1",
