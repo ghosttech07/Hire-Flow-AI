@@ -64,7 +64,8 @@ const Register = () => {
       });
       setStep('otp');
     } catch (err) {
-      setError(err.response?.data?.error || 'Registration failed. Please try again.');
+      const msg = err.response?.data?.error || (err.message === 'Network Error' ? 'Network error: Unable to connect to backend server. Check VITE_API_URL in Vercel settings.' : err.message) || 'Registration failed. Please try again.';
+      setError(msg);
     } finally {
       setLoading(false);
     }
