@@ -378,21 +378,25 @@ def logout():
 @limiter.limit("10 per minute")
 def google_login():
     """POST /api/auth/google — Verify Google ID token and sign in."""
-    print("Google auth route hit - POST /api/auth/google")
+    print("🔥 GOOGLE AUTH HIT")
+    req_json = request.get_json(silent=True) or {}
+    print("Request JSON:", req_json)
     logger.info("Google auth route hit - POST /api/auth/google")
     try:
         from google.oauth2 import id_token
         from google.auth.transport import requests as google_requests
 
-        data = request.get_json() or {}
-        # Frontend may send 'token' or 'credential' — accept both
+        data = req_json
+        # Accept 'token' or 'credential'
         google_token = data.get('token') or data.get('credential')
         if not google_token:
+            print("❌ No token provided in request body")
             logger.warning("Google auth route hit but no token provided in request body")
-            return jsonify({"error": "No Google credential provided"}), 400
+            return jsonify({"error": "Missing token"}), 400
 
         client_id = Config.GOOGLE_CLIENT_ID
         if not client_id:
+            print("❌ GOOGLE_CLIENT_ID is not configured")
             logger.error("GOOGLE_CLIENT_ID is not configured in environment")
             return jsonify({"error": "Google login is not configured on this server"}), 500
 
@@ -404,14 +408,17 @@ def google_login():
                 client_id,
             )
         except ValueError as ve:
-            logger.warning("Google token verification failed: %s", ve)
-            return jsonify({"error": "Google authentication failed — invalid or expired token"}), 401
+            print("❌ Token verification failed:", str(ve))
+            logger.warning("Google token verification failed for client_id '%s': %s", client_id, ve)
+            return jsonify({"error": f"Invalid token: {str(ve)}"}), 401
 
         # ── Extract verified claims ────────────────────────────────────────
         email     = (idinfo.get('email') or '').lower().strip()
         full_name = idinfo.get('name', '')
         picture   = idinfo.get('picture', '')
         google_sub = idinfo.get('sub', '')
+
+        print("✅ Google user:", email)
 
         if not email:
             return jsonify({"error": "No email returned by Google"}), 400

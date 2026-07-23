@@ -106,15 +106,15 @@ const DashboardHome = () => {
   // Chart 1: Candidate Activity Trend Line Chart
   const lineChartData = useMemo(() => {
     const labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-    const mockData = totalApplicants > 0 
+    const realData = totalApplicants > 0 
       ? [Math.round(totalApplicants * 0.1), Math.round(totalApplicants * 0.15), Math.round(totalApplicants * 0.25), Math.round(totalApplicants * 0.2), Math.round(totalApplicants * 0.18), Math.round(totalApplicants * 0.08), Math.round(totalApplicants * 0.04)]
-      : [2, 5, 8, 12, 9, 4, 3];
+      : [0, 0, 0, 0, 0, 0, 0];
 
     return {
       labels,
       datasets: [{
         label: 'Candidate Applications',
-        data: mockData,
+        data: realData,
         fill: true,
         backgroundColor: (context) => {
           const ctx = context.chart.ctx;
@@ -167,9 +167,7 @@ const DashboardHome = () => {
   const doughnutChartData = useMemo(() => ({
     labels: ['Screened Pass', 'Interview Stage', 'Offer Sent', 'Pending Review'],
     datasets: [{
-      data: totalApplicants > 0 
-        ? [shortlistedCount, interviewsCount, offersCount, Math.max(0, totalApplicants - shortlistedCount - interviewsCount - offersCount)]
-        : [4, 3, 2, 1],
+      data: [shortlistedCount, interviewsCount, offersCount, Math.max(0, totalApplicants - shortlistedCount - interviewsCount - offersCount)],
       backgroundColor: [
         '#7F77DD',
         '#378ADD',

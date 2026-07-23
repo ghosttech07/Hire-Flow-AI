@@ -108,12 +108,16 @@ const Login = () => {
         navigate('/dashboard');
       }
     } catch (err) {
-      setError(err.response?.data?.error || 'Google sign-in failed. Please try again.');
+      console.error("Google Auth Error:", err);
+      const serverErr = err.response?.data?.error;
+      const networkErr = err.message === 'Network Error' ? 'Network error: Cannot reach backend server. Verify VITE_API_URL on Vercel.' : null;
+      setError(serverErr || networkErr || err.message || 'Google sign-in failed. Please check backend logs.');
     } finally { setGoogleLoading(false); }
   };
 
   const handleGoogleError = () => {
-    setError('Google sign-in was cancelled or failed. Please try again.');
+    console.error("Google OAuth popup error or domain origin mismatch.");
+    setError('Google sign-in failed. Ensure your Vercel domain is added under Authorized JavaScript Origins in Google Cloud Console.');
     setGoogleLoading(false);
   };
 
