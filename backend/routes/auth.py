@@ -377,21 +377,9 @@ def logout():
 @auth_bp.route('/google', methods=['POST'])
 @limiter.limit("10 per minute")
 def google_login():
-    """
-    POST /api/auth/google
-    Body: { "token": "<google_id_token>" }
-
-    Verifies the Google ID token server-side using google-auth library.
-    Never trusts raw email from the frontend — only verified claims from Google.
-    Finds or creates the company account, then issues a HireFlow JWT.
-
-    Response:
-        200  { token, company_id, company_name, is_new_user, has_password,
-               user: { name, email, profile_picture } }
-        400  Missing or malformed credential
-        401  Invalid / expired Google token
-        500  Server misconfiguration or unexpected error
-    """
+    """POST /api/auth/google — Verify Google ID token and sign in."""
+    print("Google auth route hit - POST /api/auth/google")
+    logger.info("Google auth route hit - POST /api/auth/google")
     try:
         from google.oauth2 import id_token
         from google.auth.transport import requests as google_requests
@@ -400,6 +388,7 @@ def google_login():
         # Frontend may send 'token' or 'credential' — accept both
         google_token = data.get('token') or data.get('credential')
         if not google_token:
+            logger.warning("Google auth route hit but no token provided in request body")
             return jsonify({"error": "No Google credential provided"}), 400
 
         client_id = Config.GOOGLE_CLIENT_ID

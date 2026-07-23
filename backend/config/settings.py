@@ -23,7 +23,7 @@ class Config:
     REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379/0")
     CELERY_RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND", "redis://localhost:6379/1")
     # CORS — comma-separated list of allowed frontend origins
-    ALLOWED_ORIGINS = [o.strip() for o in os.getenv("ALLOWED_ORIGINS", "http://localhost:5173").split(",") if o.strip()]
+    ALLOWED_ORIGINS = [o.strip() for o in os.getenv("ALLOWED_ORIGINS", "http://localhost:5173,https://hire-flow-ai.vercel.app").split(",") if o.strip()]
     # JWT refresh token (separate secret from access token)
     JWT_REFRESH_SECRET = os.getenv("JWT_REFRESH_SECRET", os.getenv("JWT_SECRET", ""))
     JWT_ACCESS_EXPIRES_HOURS = int(os.getenv("JWT_ACCESS_EXPIRES_HOURS", "8"))
