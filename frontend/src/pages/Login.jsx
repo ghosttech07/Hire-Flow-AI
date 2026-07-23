@@ -191,8 +191,14 @@ const Login = () => {
           </div>
         ) : (
           <GoogleLogin
-            onSuccess={handleGoogleSuccess}
-            onError={handleGoogleError}
+            onSuccess={(credentialResponse) => {
+              console.log("🔥 GOOGLE CLICKED");
+              handleGoogleSuccess(credentialResponse);
+            }}
+            onError={() => {
+              console.log("❌ Google Login Failed");
+              setError("Google sign-in failed");
+            }}
             useOneTap={false}
             theme="filled_black"
             size="large"
