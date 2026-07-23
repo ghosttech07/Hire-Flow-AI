@@ -98,14 +98,22 @@ const Login = () => {
 
   /* Google popup flow */
   const handleGoogleSuccess = async (credentialResponse) => {
-    console.log("🔥 GOOGLE CLICKED");
+    console.log("🚀 HANDLER STARTED");
     setGoogleLoading(true); setError('');
-    try {
-      const token = credentialResponse.credential;
-      console.log("TOKEN:", token);
 
+    const token = credentialResponse?.credential;
+    if (!token) {
+      console.log("❌ TOKEN MISSING");
+      setGoogleLoading(false);
+      return;
+    }
+
+    console.log("✅ TOKEN EXISTS:", token.substring(0, 20));
+
+    try {
       const res = await googleAuth(token);
-      console.log("BACKEND RESPONSE:", res);
+      console.log("✅ API CALLED");
+      console.log("RESPONSE:", res);
 
       const data = res.data || res;
       login(data.token, data.company_id, data.company_name);
@@ -116,7 +124,7 @@ const Login = () => {
         navigate('/dashboard');
       }
     } catch (err) {
-      console.error("❌ Google Auth Error:", err);
+      console.error("❌ API ERROR:", err);
       const serverErr = err.response?.data?.error;
       const networkErr = err.message === 'Network Error' ? 'Network error: Cannot reach backend server.' : null;
       setError(serverErr || networkErr || err.message || 'Google sign-in failed');
@@ -124,7 +132,7 @@ const Login = () => {
   };
 
   const handleGoogleError = () => {
-    console.log("❌ Google Login Failed");
+    console.log("❌ GOOGLE LOGIN FAILED TRIGGER");
     setError('Google sign-in failed. Please try again.');
     setGoogleLoading(false);
   };
@@ -192,11 +200,18 @@ const Login = () => {
         ) : (
           <GoogleLogin
             onSuccess={(credentialResponse) => {
-              console.log("🔥 GOOGLE CLICKED");
+              console.log("🔥 GOOGLE CLICKED SUCCESS");
+              console.log("FULL RESPONSE:", credentialResponse);
+
+              if (!credentialResponse?.credential) {
+                console.log("❌ NO TOKEN RECEIVED");
+                return;
+              }
+
               handleGoogleSuccess(credentialResponse);
             }}
             onError={() => {
-              console.log("❌ Google Login Failed");
+              console.log("❌ GOOGLE LOGIN FAILED TRIGGER");
               setError("Google sign-in failed");
             }}
             useOneTap={false}
