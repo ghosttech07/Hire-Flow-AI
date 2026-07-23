@@ -32,7 +32,7 @@ import jwt
 
 logger = logging.getLogger(__name__)
 
-auth_bp = Blueprint('auth', __name__, url_prefix='/api/auth')
+auth_bp = Blueprint('auth', __name__)
 db = Config.db
 
 @auth_bp.route('/register', methods=['POST'])
@@ -374,10 +374,13 @@ def logout():
         return jsonify({"error": "Internal server error"}), 500
 
 
-@auth_bp.route('/google', methods=['POST'])
+@auth_bp.route('/google', methods=['POST', 'OPTIONS'], strict_slashes=False)
 @limiter.limit("10 per minute")
 def google_login():
     """POST /api/auth/google — Verify Google ID token and sign in."""
+    if request.method == 'OPTIONS':
+        return jsonify({"status": "ok"}), 200
+
     print("🔥 GOOGLE AUTH HIT")
     req_json = request.get_json(silent=True) or {}
     print("Request JSON:", req_json)

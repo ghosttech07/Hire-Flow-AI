@@ -51,7 +51,7 @@ def create_app():
     from routes.interview import interview_bp
     from routes.result import result_bp
     app.register_blueprint(jobs_bp)
-    app.register_blueprint(auth_bp)
+    app.register_blueprint(auth_bp, url_prefix='/api/auth')
     app.register_blueprint(apply_bp)
     app.register_blueprint(interview_bp)
     app.register_blueprint(result_bp)
