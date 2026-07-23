@@ -1,11 +1,14 @@
 import api from './axios';
+import axios from 'axios';
+
+const BACKEND_URL = (import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || 'https://hire-flow-ai.onrender.com').replace(/\/$/, '');
 
 // Auth endpoints
 export const registerCompany = (data) => api.post('/api/auth/register', data).then(res => res.data);
 export const verifyOtp = (data) => api.post('/api/auth/verify-otp', data).then(res => res.data);
 export const resendOtp = (data) => api.post('/api/auth/resend-otp', data).then(res => res.data);
 export const loginCompany = (data) => api.post('/api/auth/login', data).then(res => res.data);
-export const googleAuth = (token) => api.post('/api/auth/google', { token }).then(res => res.data);
+export const googleAuth = (token) => axios.post(`${BACKEND_URL}/api/auth/google`, { token }).then(res => res.data);
 export const getMe = () => api.get('/api/auth/me').then(res => res.data);
 export const updateProfile = (data) => api.put('/api/auth/profile', data).then(res => res.data);
 export const getDashboardStats = () => api.get('/api/dashboard-stats').then(res => res.data);
