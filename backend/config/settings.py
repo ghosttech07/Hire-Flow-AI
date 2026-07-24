@@ -8,7 +8,7 @@ load_dotenv()
 logger = logging.getLogger(__name__)
 
 class Config:
-    SECRET_KEY = os.getenv("JWT_SECRET") or "hireflow_jwt_secret_default_key_2026_safe"
+    SECRET_KEY = os.getenv("JWT_SECRET")
     MONGO_URI = os.getenv("MONGO_URI")
     GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
     RESEND_API_KEY = os.getenv("RESEND_API_KEY")
@@ -25,7 +25,7 @@ class Config:
     # CORS — comma-separated list of allowed frontend origins
     ALLOWED_ORIGINS = [o.strip() for o in os.getenv("ALLOWED_ORIGINS", "http://localhost:5173,https://hire-flow-ai.vercel.app").split(",") if o.strip()]
     # JWT refresh token (separate secret from access token)
-    JWT_REFRESH_SECRET = os.getenv("JWT_REFRESH_SECRET") or os.getenv("JWT_SECRET") or "hireflow_jwt_refresh_secret_default_key_2026_safe"
+    JWT_REFRESH_SECRET = os.getenv("JWT_REFRESH_SECRET", os.getenv("JWT_SECRET"))
     JWT_ACCESS_EXPIRES_HOURS = int(os.getenv("JWT_ACCESS_EXPIRES_HOURS", "8"))
     JWT_REFRESH_EXPIRES_DAYS = int(os.getenv("JWT_REFRESH_EXPIRES_DAYS", "30"))
     # Rate limiter uses its own Redis DB to avoid mixing with task queue

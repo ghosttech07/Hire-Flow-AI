@@ -8,10 +8,7 @@ import './styles/tokens.css'
 import './index.css'
 import App from './App.jsx'
 
-const DEFAULT_GOOGLE_CLIENT_ID = '767486186881-hvjovl2ctub9743rm1qm0e27t1evsnfg.apps.googleusercontent.com';
-const GOOGLE_CLIENT_ID = (import.meta.env.VITE_GOOGLE_CLIENT_ID && import.meta.env.VITE_GOOGLE_CLIENT_ID.trim())
-  ? import.meta.env.VITE_GOOGLE_CLIENT_ID.trim()
-  : DEFAULT_GOOGLE_CLIENT_ID;
+const GOOGLE_CLIENT_ID = (import.meta.env.VITE_GOOGLE_CLIENT_ID || '').trim();
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
