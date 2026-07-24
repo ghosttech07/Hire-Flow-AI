@@ -15,14 +15,20 @@ export const AuthProvider = ({ children }) => {
     if (storedToken) {
       try {
         const profile = await getMe();
-        setCompanyId(profile.company_id);
-        setCompanyName(profile.company_name);
-        setCompanyProfile(profile);
-        localStorage.setItem('companyId', profile.company_id);
-        localStorage.setItem('companyName', profile.company_name);
+        if (profile && (profile.company_id || profile._id)) {
+          const cId = profile.company_id || profile._id;
+          const cName = profile.company_name || 'Recruiter';
+          setCompanyId(cId);
+          setCompanyName(cName);
+          setCompanyProfile(profile);
+          localStorage.setItem('companyId', cId);
+          localStorage.setItem('companyName', cName);
+        }
       } catch (err) {
-        console.error('Failed to hydrate auth profile, logging out...', err);
-        logout();
+        console.error('Failed to hydrate auth profile:', err);
+        if (err.response?.status === 401) {
+          logout();
+        }
       }
     }
     setLoading(false);
