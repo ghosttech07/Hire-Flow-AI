@@ -1,0 +1,14 @@
+# Ignore local virtualenv and node_modules so they aren't bundled into Vercel Serverless Functions
+venv/
+.venv/
+node_modules/
+frontend/node_modules/
+frontend/dist/
+.git/
+.kombai/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+.env.local
