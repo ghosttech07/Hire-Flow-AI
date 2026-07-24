@@ -381,10 +381,8 @@ def google_login():
     if request.method == 'OPTIONS':
         return jsonify({"status": "ok"}), 200
 
-    print("🔥 GOOGLE AUTH HIT")
-    req_json = request.get_json(silent=True) or {}
-    print("Request JSON:", req_json)
     logger.info("Google auth route hit - POST /api/auth/google")
+    req_json = request.get_json(silent=True) or {}
     try:
         from google.oauth2 import id_token
         from google.auth.transport import requests as google_requests
@@ -393,13 +391,11 @@ def google_login():
         # Accept 'token' or 'credential'
         google_token = data.get('token') or data.get('credential')
         if not google_token:
-            print("❌ No token provided in request body")
             logger.warning("Google auth route hit but no token provided in request body")
             return jsonify({"error": "Missing token"}), 400
 
         client_id = Config.GOOGLE_CLIENT_ID
         if not client_id:
-            print("❌ GOOGLE_CLIENT_ID is not configured")
             logger.error("GOOGLE_CLIENT_ID is not configured in environment")
             return jsonify({"error": "Google login is not configured on this server"}), 500
 
@@ -411,7 +407,6 @@ def google_login():
                 client_id,
             )
         except ValueError as ve:
-            print("❌ Token verification failed:", str(ve))
             logger.warning("Google token verification failed for client_id '%s': %s", client_id, ve)
             return jsonify({"error": f"Invalid token: {str(ve)}"}), 401
 
@@ -421,7 +416,7 @@ def google_login():
         picture   = idinfo.get('picture', '')
         google_sub = idinfo.get('sub', '')
 
-        print("✅ Google user:", email)
+        logger.info("Google user authenticated: %s", email)
 
         if not email:
             return jsonify({"error": "No email returned by Google"}), 400

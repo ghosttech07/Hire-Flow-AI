@@ -1,7 +1,7 @@
 import api from './axios';
 import axios from 'axios';
 
-const BACKEND_URL = (import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || 'https://hire-flow-ai.onrender.com').replace(/\/$/, '');
+const BACKEND_URL = (import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || '').replace(/\/$/, '');
 
 // Auth endpoints
 export const registerCompany = (data) => api.post('/api/auth/register', data).then(res => res.data);
